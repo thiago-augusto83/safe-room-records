@@ -56,11 +56,12 @@ const App = () => {
           </button>
         </div>
         <div className={style.listContainer}>
+
           {" "}
           {/* 22. Caixa onde a lista de jogos vai aparecer. */}
           {games.map(
             (
-              game, // 23. O "map" percorre sua lista de jogos um por um e cria um visual para cada um.
+              game // 23. O "map" percorre sua lista de jogos um por um e cria um visual para cada um.
             ) => (
               <div key={game.id}>
                 {" "}
@@ -74,6 +75,7 @@ const App = () => {
               </div>
             ),
           )}
+          
         </div>
       </main>
     </>

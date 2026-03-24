@@ -1,24 +1,44 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import style from "./styles/App.module.css";
 
 const App = () => {
   const [gameName, setGameName] = useState("");
   const [games, setGames] = useState([]);
+  const [editingGameId, setEditingGameId] = useState(null);
 
-  const handleAddGame = () => {
+  const handleSubmitGame = () => {
     if (gameName.trim() === "") return;
 
-    const newGame = {
-      id: Date.now(),
-      name: gameName,
-    };
+    const isEditing = editingGameId !== null;
+    if (isEditing) {
+      // modo edição
+      setGames((prevGames) =>
+        prevGames.map((game) =>
+          game.id === editingGameId ? { ...game, name: gameName } : game,
+        ),
+      );
 
-    setGames([...games, newGame]);
+      setEditingGameId(null);
+    } else {
+      // modo criação
+      const newGame = {
+        id: Date.now(),
+        name: gameName,
+      };
+
+      setGames((prevGames) => [...prevGames, newGame]);
+    }
+
     setGameName("");
   };
 
   const handleRemoveGame = (id) => {
-    setGames(games.filter((game) => game.id !== id));
+    setGames((prevGames) => prevGames.filter((game) => game.id !== id));
+  };
+
+  const handleEditGame = (game) => {
+    setGameName(game.name);
+    setEditingGameId(game.id);
   };
 
   return (
@@ -29,13 +49,12 @@ const App = () => {
         <div className={style.insertDataContainer}>
           <input
             type="text"
-            placeholder="Digite o nome do jogo"
+            placeholder="Digite o nome do jogo..."
             value={gameName}
             onChange={(e) => setGameName(e.target.value)}
           />
-
-          <button className={style.btnInsert} onClick={handleAddGame}>
-            Adicionar
+          <button onClick={handleSubmitGame}>
+            {editingGameId !== null ? "Salvar" : "Adicionar"}
           </button>
         </div>
 
@@ -44,6 +63,7 @@ const App = () => {
             <div key={game.id}>
               <span>{game.name}</span>
               <button onClick={() => handleRemoveGame(game.id)}>Remover</button>
+              <button onClick={() => handleEditGame(game)}>Editar</button>
             </div>
           ))}
         </div>
