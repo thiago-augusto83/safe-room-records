@@ -1,87 +1,30 @@
-import { useState, useEffect } from "react";
+// 4
 import style from "./styles/App.module.css";
 
+// 1
 const App = () => {
-  const [gameName, setGameName] = useState("");
-
-  const [games, setGames] = useState(() => {
-    const storedGames = localStorage.getItem("games");
-
-    if (!storedGames) return [];
-
-    return JSON.parse(storedGames);
-  });
-
-  const [editingGameId, setEditingGameId] = useState(null);
-
-  useEffect(() => {
-    localStorage.setItem("games", JSON.stringify(games));
-  }, [games]);
-
-  const handleSubmitGame = () => {
-    if (gameName.trim() === "") return;
-
-    const isEditing = editingGameId !== null;
-    if (isEditing) {
-      // modo edição
-      setGames((prevGames) =>
-        prevGames.map((game) =>
-          game.id === editingGameId ? { ...game, name: gameName } : game,
-        ),
-      );
-
-      setEditingGameId(null);
-    } else {
-      // modo criação
-      const newGame = {
-        id: Date.now(),
-        name: gameName,
-      };
-
-      setGames((prevGames) => [...prevGames, newGame]);
-    }
-
-    setGameName("");
-  };
-
-  const handleRemoveGame = (id) => {
-    setGames((prevGames) => prevGames.filter((game) => game.id !== id));
-  };
-
-  const handleEditGame = (game) => {
-    setGameName(game.name);
-    setEditingGameId(game.id);
-  };
-
+  // 2 - return <><main></main></>
   return (
     <>
+      {/* 5 - className no main */}
       <main className={style.appContainer}>
+        {/* 6 */}
         <h1>Safe Room Records</h1>
-
+        {/* 7 - <div></div> </input type=text> <button></button>*/}
+        {/* 8 - clasName na div */}
         <div className={style.insertDataContainer}>
-          <input
-            type="text"
-            placeholder="Digite o nome do jogo..."
-            value={gameName}
-            onChange={(e) => setGameName(e.target.value)}
-          />
-          <button onClick={handleSubmitGame}>
-            {editingGameId !== null ? "Salvar" : "Adicionar"}
-          </button>
+          <input type="text" placeholder="Digite o nome do jogo..." />
+          <button>Adicionar</button>
         </div>
-
+        {/* 9 - div*/}
+        {/* 10 - className na div */}
         <div className={style.listContainer}>
-          {games.map((game) => (
-            <div key={game.id}>
-              <span>{game.name}</span>
-              <button onClick={() => handleRemoveGame(game.id)}>Remover</button>
-              <button onClick={() => handleEditGame(game)}>Editar</button>
-            </div>
-          ))}
+          
         </div>
       </main>
     </>
   );
 };
 
+// 3
 export { App };
