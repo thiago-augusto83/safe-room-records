@@ -1,160 +1,125 @@
+// 5
 import { useEffect, useState } from "react";
 import style from "./styles/App.module.css";
 
+// 1
 const App = () => {
-  console.log("🔄 Renderizando App");
+  // 1.2
+  console.log("🔄 Renderizando o App");
 
+  // 12
   const [gameName, setGameName] = useState("");
-  
-  const [games, setGames] = useState(() => {
-    console.log("📦 Inicializando games (useState)");
+  const [games, setGames] = useState([]);
 
-    const storedGames = localStorage.getItem("games");
-    console.log("📦 localStorage:", storedGames);
+  // 29
+  const [editingGameId, setEditingGameId] = useState(null);
 
-    if (!storedGames) {
-      console.log("📦 Nenhum jogo salvo, iniciando vazio");
-      return [];
-    }
-
-    const parsed = JSON.parse(storedGames);
-    console.log("📦 Jogos carregados:", parsed);
-    return parsed;
-  });
-
-  const [editingGame, setEditingGameId] = useState(null);
-
-  // 🔵 Sempre que games muda
-  useEffect(() => {
-    console.log("💾 Salvando no localStorage:", games);
-    localStorage.setItem("games", JSON.stringify(games));
-  }, [games]);
-
-  // 🟡 Monitorando mudanças
-  useEffect(() => {
-    console.log("📊 Estado atualizado:");
-    console.log("➡ gameName:", gameName);
-    console.log("➡ editingGame:", editingGame);
-    console.log("➡ games:", games);
-    console.table(games);
-  }, [games, gameName, editingGame]);
-
+  // 13
   const handleSubmitGame = () => {
+    // 13.1
     console.log("🟢 handleSubmitGame chamado");
 
+    // 14
     if (gameName.trim() === "") {
-      console.log("⚠️ Input vazio!");
+      console.log("⚠️ Vazio!");
       return;
     }
 
-    console.log("✍️ Nome digitado:", gameName);
+    // 16
+    // 16.1
+    console.log("✍️ Nome digitado: ", gameName);
 
-    const isEditing = editingGame !== null;
-    console.log("✏️ Está editando?", isEditing);
+    // 17
+    const newGame = {
+      id: Date.now(),
+      name: gameName,
+    };
 
-    if (isEditing) {
-      console.log("🛠️ MODO EDIÇÃO");
-
-      setGames((prevGames) => {
-        console.log("📌 Estado anterior:", prevGames);
-
-        const updated = prevGames.map((game) => {
-          if (game.id === editingGame) {
-            console.log("✅ Atualizando jogo:", game);
-            return { ...game, name: gameName };
-          }
-          return game;
-        });
-
-        console.log("📌 Novo estado:", updated);
-        return updated;
-      });
-
-      setEditingGameId(null);
-      console.log("🔄 Saindo do modo edição");
-    } else {
-      console.log("🆕 MODO CRIAÇÃO");
-
-      const newGame = {
-        id: Date.now(),
-        name: gameName,
-      };
-
-      console.log("➕ Novo jogo:", newGame);
-
-      setGames((prevGames) => {
-        console.log("📌 Estado anterior:", prevGames);
-        const updated = [...prevGames, newGame];
-        console.log("📌 Novo estado:", updated);
-        return updated;
-      });
-    }
-
+    // 18
+    setGames((prevGames) => [...prevGames, newGame]);
+    // 19
     setGameName("");
+    // 19.1
     console.log("🧹 Limpando input");
   };
 
+  // 26
   const handleRemoveGame = (id) => {
-    console.log("🗑️ Removendo jogo ID:", id);
-
+    console.log("🗑️ Removendo o jogo ID: ", id);
+    // 27
+    // setGames((prevGames) => prevGames.filter((game) => game.id !== id));
+    // 28
     setGames((prevGames) => {
-      console.log("📌 Estado anterior:", prevGames);
+      // 28.1
+      console.log("Estado anterior: ", prevGames);
 
+      // 28.2
       const filtered = prevGames.filter((game) => game.id !== id);
 
-      console.log("📌 Novo estado:", filtered);
+      // 28.3
+      console.log("📌 Novo estado: ", filtered);
       return filtered;
     });
   };
 
+  // 30
   const handleEditGame = (game) => {
-    console.log("✏️ Editando jogo:", game);
-
+    console.log("✏️ Editando o jogo: ", game);
     setGameName(game.name);
     setEditingGameId(game.id);
   };
 
+  // 20 - 🟡 Monitorando mudanças
+  useEffect(() => {
+    console.log("📊 Estado atualizado:");
+    console.log("➡ gameName:", gameName);
+    console.log("➡ games:", games);
+    console.table(games);
+  }, [gameName, games]);
+
+  // 2
   return (
     <>
+      {/* 3 */}
+      {/* 6 - className */}
       <main className={style.appContainer}>
+        {/* 7 */}
         <h1>Safe Room Records</h1>
-
+        {/* 8 - */}
+        {/* 9 - className */}
         <div className={style.insertDataContainer}>
+          {/* 10 */}
+          {/* 16 - value, onChange */}
           <input
             type="text"
             placeholder="Digite o nome do jogo..."
             value={gameName}
-            onChange={(e) => {
-              console.log("⌨️ Digitando:", e.target.value);
-              setGameName(e.target.value);
-            }}
+            onChange={(e) => setGameName(e.target.value)}
           />
-
-          <button onClick={handleSubmitGame}>
-            {editingGame !== null ? "Salvar" : "Adicionar"}
-          </button>
+          {/* 11 */}
+          {/* 15 - onClick */}
+          <button onClick={handleSubmitGame}>Adicionar</button>
         </div>
-
+        {/* 22 */}
+        {/* 22.1 - className */}
         <div className={style.listContainer}>
-          {games.map((game) => {
-            console.log("🎮 Renderizando jogo:", game);
-
-            return (
-              <div key={game.id}>
-                <span>{game.name}</span>
-
-                <button onClick={() => handleRemoveGame(game.id)}>
-                  Remover
-                </button>
-
-                <button onClick={() => handleEditGame(game)}>Editar</button>
-              </div>
-            );
-          })}
+          {/* 23 */}
+          {games.map((game) => (
+            // 24 div -> key
+            <div key={game.id}>
+              {/* 25 */}
+              {game.name}
+              {/* 28 */}
+              <button onClick={() => handleRemoveGame(game.id)}>Remover</button>
+              {/* 31 */}
+              <button onClick={() => handleEditGame(game)}>Editar</button>
+            </div>
+          ))}
         </div>
       </main>
     </>
   );
 };
 
+// 4
 export { App };
