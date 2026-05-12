@@ -5,7 +5,7 @@ const App = () => {
   console.log("🔄 Renderizando App");
 
   const [gameName, setGameName] = useState("");
-  
+
   const [games, setGames] = useState(() => {
     console.log("📦 Inicializando games (useState)");
 
