@@ -1,51 +1,3 @@
-/* .appContainer {
-  width: 500px;
-  height: 500px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  background-color: aliceblue;
-  box-shadow:
-    rgba(0, 0, 0, 0.19) 0px 10px 20px,
-    rgba(0, 0, 0, 0.23) 0px 6px 6px;
-}
-
-h1 {
-  width: 100%;
-  height: 40px;
-  text-align: center;
-  border-bottom: 1px solid lightblue;
-}
-
-.insertDataContainer {
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  border-bottom: 1px solid lightblue;
-}
-
-.listContainer {
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border-bottom: 1px solid lightblue;
-} */
-
-/* ============================================================
-   Safe Room Records — CSS Module
-   Aesthetic: Dark Survival · Minimal · Atmospheric
-   ============================================================ */
-
-/* ============================================================
-   Safe Room Records — CSS Module
-   Aesthetic: Dark Survival · Minimal · Atmospheric
-   ============================================================ */
-
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
@@ -77,7 +29,6 @@ body {
     url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
-/* h1 - O affter é a linha que aparece embaixo do texto "Safe Room Records" */
 h1 {
   font-family: 'Rajdhani', sans-serif;
   font-size: clamp(2rem, 5vw, 3.5rem);
@@ -99,6 +50,7 @@ h1 {
   }
 }
 
+/* ── App Container ──────────────────────────────────────── */
 .appContainer {
   max-width: 560px;
   margin: 2.5rem auto 4rem;
@@ -188,7 +140,7 @@ h1 {
   &:active { transform: translateY(0); box-shadow: none; }
 }
 
-/* ── Cancel Button ──────────────────────────────────────── */
+/* ── Cancel Button (input panel) ────────────────────────── */
 .btnCancel {
   flex-shrink: 0;
   background: transparent;
@@ -211,90 +163,6 @@ h1 {
 @keyframes fadeSlideIn {
   from { opacity: 0; transform: translateX(6px); }
   to   { opacity: 1; transform: translateX(0); }
-}
-
-/* ── Game List ──────────────────────────────────────────── */
-.listContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 0.8rem;
-}
-
-.listContainer:empty::after {
-  content: '— nenhum jogo registrado —';
-  display: block;
-  text-align: center;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  color: var(--text-muted);
-  padding: 2rem 0;
-  text-transform: uppercase;
-}
-
-.listContainer > div {
-  display: grid;
-  grid-template-columns: 1fr auto auto auto;
-  align-items: center;
-  gap: 0.75rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 0.85rem 1rem 0.85rem 1.1rem;
-  transition: border-color var(--transition), background var(--transition), transform var(--transition), box-shadow var(--transition);
-  animation: rowIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes rowIn {
-  from { opacity: 0; transform: translateX(-8px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-.listContainer > div:hover {
-  background: var(--bg-elevated);
-  border-color: var(--border-glow);
-  border-left-color: var(--accent);
-  transform: translateX(3px);
-  box-shadow: -3px 0 0 var(--accent), 4px 0 20px #00000055;
-}
-
-.listContainer > div > span {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.listContainer > div > button {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: transparent;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  padding: 0.35rem 0.7rem;
-  transition: all var(--transition);
-  white-space: nowrap;
-}
-
-.listContainer > div > button:first-of-type {
-  color: var(--accent-dim);
-  border-color: #2f1510;
-  &:hover { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
-}
-
-.listContainer > div > button:last-of-type {
-  color: var(--text-secondary);
-  border-color: var(--border);
-  &:hover { background: var(--bg-elevated); color: var(--text-primary); border-color: #555560; }
 }
 
 ::-webkit-scrollbar { width: 4px; }

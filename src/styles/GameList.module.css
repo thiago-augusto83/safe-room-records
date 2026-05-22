@@ -1,0 +1,123 @@
+/* ============================================================
+   GameList — CSS Module
+   Aesthetic: Dark Survival · Minimal · Atmospheric
+   ============================================================ */
+
+/* ── List Container ─────────────────────────────────────── */
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.listContainer:empty::after {
+  content: '— nenhum jogo registrado —';
+  display: block;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  padding: 2rem 0;
+  text-transform: uppercase;
+}
+
+/* ── Game Card ──────────────────────────────────────────── */
+.gameCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem 0.85rem 1.1rem;
+  transition:
+    border-color var(--transition),
+    background   var(--transition),
+    transform    var(--transition),
+    box-shadow   var(--transition);
+  animation: rowIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes rowIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.gameCard:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-glow);
+  border-left-color: var(--accent);
+  transform: translateX(3px);
+  box-shadow: -3px 0 0 var(--accent), 4px 0 20px #00000055;
+}
+
+.gameCard > span {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+/* ── Actions ────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.actions button {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.35rem 0.7rem;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+/* Remover */
+.actions button:nth-child(1) {
+  color: var(--accent-dim);
+  border-color: #2f1510;
+  &:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+  }
+}
+
+/* Editar */
+.actions button:nth-child(2) {
+  color: var(--text-secondary);
+  border-color: var(--border);
+  &:hover {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border-color: #555560;
+  }
+}
+
+/* Cancelar Edição */
+.actions button:nth-child(3) {
+  color: var(--text-muted);
+  border-color: var(--border);
+  &:hover {
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    border-color: #3a3f5c;
+  }
+}
